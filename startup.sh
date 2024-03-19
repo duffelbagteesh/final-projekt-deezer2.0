@@ -1,1 +1,1 @@
-gunicorn --chdir backend 'app:app'
+gunicorn --chdir backend 'app:app' --timeout 0
