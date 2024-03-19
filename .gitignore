@@ -164,9 +164,17 @@ cython_debug/
 .DS_Store*
 
 # Project-specific
-/pretrained_models
+/backend/pretrained_models
 *.mp3
 *.wav
 
 # Keep the demo track
 !/public/demo/The_Spin_Wires_-_Goodbar_Good_Night.mp3
+
+# Keep Uploads Directory, but not uploaded files
+/uploads/*
+!/uploads/.gitkeep
+
+# Keep Tracks directory, but not separated files
+/public/tracks/*
+!/public/tracks/.gitkeep
