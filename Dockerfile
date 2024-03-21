@@ -14,5 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
+RUN apt-get update && \
+    apt-get install -y ffmpeg
+
 # Run gunicorn server when the container launches
 CMD ["gunicorn", "app:app"]
