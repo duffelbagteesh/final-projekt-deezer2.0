@@ -15,4 +15,4 @@ RUN pip install --user -r requirements.txt
 EXPOSE 80
 
 # Run gunicorn server when the container launches
-CMD ["gunicorn", "app:app"]
+CMD ["gunicorn", "--chdir", "backend", "app:app"]
