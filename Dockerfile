@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8-slim-buster
+FROM python:3.8-slim-buster as base
 
 # Set the working directory in the container to /app
 WORKDIR /app
@@ -19,6 +19,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Create a non-privileged user and switch to it
 RUN adduser --disabled-password --gecos "" --home "/nonexistent" --shell "/sbin/nologin" --no-create-home --uid "10001" appuser
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+    python -m pip install -r requirements.txt
+
 USER appuser
 
 # Make port 80 available to the world outside this container
@@ -26,3 +31,11 @@ EXPOSE 80
 
 # Run gunicorn server when the container launches
 CMD ["gunicorn", "--chdir", "backend", "app:app"]
+
+# Create a new image for setting permissions
+FROM base AS permissions
+
+USER root
+
+# Set permissions for the /app/public/uploads directory
+RUN mkdir -p /app/public/uploads && chmod 777 /app/public/uploads
