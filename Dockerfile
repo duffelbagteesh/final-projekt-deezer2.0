@@ -14,8 +14,15 @@ RUN apt-get update && apt-get install -y ffmpeg
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies using a Debian mirror
+RUN apt-get update && \
+    apt-get install -y ffmpeg && \
+    touch /etc/apt/sources.list && \
+    sed -i 's/deb.debian.org/ftp.us.debian.org/' /etc/apt/sources.list
+
+
+# Set the path for ffprobe
+ENV PATH="/usr/bin:${PATH}"
 
 # Create a non-privileged user and switch to it
 RUN adduser --disabled-password --gecos "" --home "/nonexistent" --shell "/sbin/nologin" --no-create-home --uid "10001" appuser
