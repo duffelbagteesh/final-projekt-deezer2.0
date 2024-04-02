@@ -22,4 +22,4 @@ USER appuser
 EXPOSE 80
 
 # Run gunicorn server when the container launches
-CMD ["gunicorn", "app:app"]
+CMD ["gunicorn", "--chdir", "backend", "app:app"]
