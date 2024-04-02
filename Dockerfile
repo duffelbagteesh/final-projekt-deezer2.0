@@ -1,15 +1,15 @@
 # Use an official Python runtime as a parent image
-FROM python:3.8-slim-buster as base
+ARG PYTHON_VERSION=3.8
+FROM python:${PYTHON_VERSION}-slim as base
 
 # Set the working directory in the container to /app
 WORKDIR /app
 
-# Add the current directory contents into the container at /app
-ADD . /app
-
 # Prevents Python from writing pyc files to disk and keeps Python from buffering stdout and stderr
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
 
 # Install dependencies using a Debian mirror
 RUN apt-get update && \
@@ -22,13 +22,24 @@ RUN apt-get update && \
 ENV PATH="/usr/bin:${PATH}"
 
 # Create a non-privileged user and switch to it
-RUN adduser --disabled-password --gecos "" --home "/nonexistent" --shell "/sbin/nologin" --no-create-home --uid "10001" appuser
+ARG UID=10001
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    appuser
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
 
 USER appuser
+
+# Copy the source code into the container.
+COPY . /app
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
