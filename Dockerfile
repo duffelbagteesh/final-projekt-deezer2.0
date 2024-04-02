@@ -7,9 +7,6 @@ WORKDIR /app
 # Add the current directory contents into the container at /app
 ADD . /app
 
-# Install FFmpeg
-RUN apt-get update && apt-get install -y ffmpeg
-
 # Prevents Python from writing pyc files to disk and keeps Python from buffering stdout and stderr
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
