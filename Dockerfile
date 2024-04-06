@@ -47,7 +47,7 @@ COPY . /app
 EXPOSE 80
 
 # Run gunicorn server when the container launches
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "--timeout", "600", "--chdir", "backend", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "--timeout", "600", "-k", "gthread", "--chdir", "backend", "app:app"]
 
 # Create a new image for setting permissions
 FROM base AS permissions
