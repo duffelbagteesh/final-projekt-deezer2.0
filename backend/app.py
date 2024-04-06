@@ -5,6 +5,7 @@ from pydub import AudioSegment
 import numpy as np
 from scipy.io import wavfile
 import uuid
+import logging
 
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
 session_id = uuid.uuid4().hex
@@ -120,6 +121,8 @@ if app.config["DEBUG"]:
     def after_request(response):
         response.headers["Cache-Control"] = " no-store, max-age=0"
         return response
+
+logging.basicConfig(level=logging.DEBUG, handlers=[logging.StreamHandler()])
 
 if __name__ == '__main__':
     app.run()
