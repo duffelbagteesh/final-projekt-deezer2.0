@@ -49,7 +49,7 @@ def split_audio():
 
         # Save to a temp location
         os.makedirs(app.config['upload_folder'], exist_ok=True)
-        temp_file = os.path.join(app.config['upload_folder'], 'uploaded_audio.mp3')
+        temp_file = os.path.join(upload_folder, 'uploaded_audio.mp3')
         audio_file.save(temp_file)
 
         # Transcode MP3 to WAV
