@@ -14,18 +14,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Login to DockerHub
+    - name: Login to Azure Container Registry
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        registry: deezerRegistry.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
         context: .
         push: true
-        tags: duffelbagteesh/projekt-deezer2.0:latest
+        tags: deezerRegistry.azurecr.io/projekt-deezer2.0:latest
 
     - name: Login to Azure
       uses: azure/login@v1
@@ -38,4 +39,4 @@ jobs:
       with:
         app-name: 'deezer5'
         slot-name: 'Production'
-        images: duffelbagteesh/projekt-deezer2.0:latest
+        images: deezerRegistry.azurecr.io/projekt-deezer2.0:latest
