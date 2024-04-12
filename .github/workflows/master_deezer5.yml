@@ -26,7 +26,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: deezerRegistry.azurecr.io/projekt-deezer2.0:latest
+        tags: deezerregistry.azurecr.io/projekt-deezer2.0:latest
 
     - name: Login to Azure
       uses: azure/login@v1
@@ -39,4 +39,4 @@ jobs:
       with:
         app-name: 'deezer5'
         slot-name: 'Production'
-        images: deezerRegistry.azurecr.io/projekt-deezer2.0:latest
+        images: deezerregistry.azurecr.io/projekt-deezer2.0:latest
