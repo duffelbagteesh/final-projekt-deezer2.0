@@ -41,6 +41,13 @@ def index():
 @app.route('/split-audio', methods=['POST'])
 def split_audio():
 
+    # Generate a new session ID for this request
+    session_id = uuid.uuid4().hex
+
+    # Define the upload and split audio directories for this request
+    upload_folder = os.path.join(os.getcwd(), os.pardir, 'uploads', session_id)
+    split_audio_dir = os.path.join(os.getcwd(), os.pardir, 'public/tracks', session_id)
+
 
     # get uploaded audio file
     audio_file = request.files['audioFile']
