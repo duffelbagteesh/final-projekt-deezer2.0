@@ -17,7 +17,7 @@ jobs:
     - name: Login to Azure Container Registry
       uses: docker/login-action@v1
       with:
-        registry: deezerRegistry.azurecr.io
+        registry: deezerregistry.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
 
