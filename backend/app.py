@@ -48,7 +48,7 @@ def split_audio():
     if audio_file and allowed_file(audio_file.filename):
 
         # Save to a temp location
-        os.makedirs(app.config['upload_folder'], exist_ok=True)
+        os.makedirs(upload_folder, exist_ok=True)
         temp_file = os.path.join(upload_folder, 'uploaded_audio.mp3')
         audio_file.save(temp_file)
 
