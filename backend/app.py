@@ -8,17 +8,9 @@ import uuid
 import logging
 
 ALLOWED_EXTENSIONS = {'mp3', 'wav'}
-session_id = uuid.uuid4().hex
 
 # Made "public" folder to serve static files
 app = Flask(__name__, template_folder='../frontend/templates', static_url_path='',static_folder='../public')
-
-# Store the split audio files in a unique directory for each request
-split_audio_dir = os.path.join(os.getcwd(), os.pardir, 'public/tracks', session_id)
-
-
-app.config['upload_folder'] = os.path.join(os.getcwd(), os.pardir, 'uploads', session_id)
-
 
 
 def mp3_to_wav(mp3_path):
